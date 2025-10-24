@@ -30,7 +30,7 @@ const Header = () => {
         {isAuthenticated && (
           <nav className="flex space-x-6 items-center">
             <NavLink
-              to="/"
+              to="/admin/dashboard"
               className={({ isActive }) =>
                 isActive ? "text-yellow-400 font-semibold" : "hover:text-yellow-300"
               }
@@ -38,7 +38,7 @@ const Header = () => {
               Dashboard
             </NavLink>
             <NavLink
-              to="/events"
+              to="/admin/events"
               className={({ isActive }) =>
                 isActive ? "text-yellow-400 font-semibold" : "hover:text-yellow-300"
               }
@@ -46,7 +46,7 @@ const Header = () => {
               Events
             </NavLink>
             <NavLink
-              to="/bookings"
+              to="/admin/bookings"
               className={({ isActive }) =>
                 isActive ? "text-yellow-400 font-semibold" : "hover:text-yellow-300"
               }

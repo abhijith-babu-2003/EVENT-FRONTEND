@@ -8,7 +8,7 @@ import Events from "./pages/Events";
 import Contact from "./pages/Contact";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute"; // import it
+import ProtectedRoute from "./components/ProtectedRoute"; 
 import About from "./pages/About";
 import CheckOut from "./pages/CheckOut";
 import Payment from "./pages/Payment";
@@ -23,7 +23,6 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-      
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element ={<About/>}/>
 

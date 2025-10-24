@@ -11,7 +11,7 @@ import { selectAdminAuth } from "./redux/slices/adminSlice";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector(selectAdminAuth);
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/admin/login" replace />;
 };
 
 const App = () => {
@@ -19,9 +19,9 @@ const App = () => {
     <div className="min-h-screen bg-gray-100">
       <Header />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<Login />} />
         <Route
-          path="/"
+          path="/admin/dashboard"
           element={
             <ProtectedRoute>
               <Home />
@@ -29,15 +29,7 @@ const App = () => {
           }
         />
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/events"
+          path="/admin/events"
           element={
             <ProtectedRoute>
               <Events />
@@ -45,14 +37,14 @@ const App = () => {
           }
         />
         <Route
-          path="/bookings"
+          path="/admin/bookings"
           element={
             <ProtectedRoute>
               <Bookings />
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
     </div>
   );
