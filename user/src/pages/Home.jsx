@@ -1,5 +1,5 @@
 import React from "react";
-import bg from "../assets/BG.JPG";
+import bg from "../assets/Background.jpg";
 import { Link } from "react-router-dom";
 
 const Home = () => {
