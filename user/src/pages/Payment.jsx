@@ -81,7 +81,7 @@ const Payment = () => {
 
   const stripePromise = useMemo(
     () =>
-      loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "", {
+      loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY|| "", {
         // Disables Stripe telemetry/fraud beacon requests (e.g., r.stripe.com)
         // Useful in dev when ad blockers cause console noise; consider enabling in prod for best fraud detection.
         advancedFraudSignals: false,
@@ -95,29 +95,63 @@ const Payment = () => {
   useEffect(() => {
     const init = async () => {
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          toast.error("Please login to continue with payment");
+          navigate('/login', { state: { from: location.pathname, state: location.state } });
+          return;
+        }
+
         if (!eventId || !unitPrice || !quantity || quantity < 1) {
           toast.error("Missing payment details. Please start from checkout again.");
           navigate('/events');
           return;
         }
+        
         setError("");
         setLoading(true);
+        
         const amountInPaise = Math.round(Number(unitPrice) * Number(quantity) * 100);
         const res = await paymentApi.createIntent({
           amount: amountInPaise,
           currency: "inr",
-          metadata: { eventId, section, qty: String(quantity), customerName: (customerName || "").trim() },
+          metadata: { 
+            eventId, 
+            section, 
+            qty: String(quantity), 
+            customerName: (customerName || "").trim() 
+          },
         });
-        setClientSecret(res.clientSecret);
+        
+        if (res.clientSecret) {
+          setClientSecret(res.clientSecret);
+        } else {
+          throw new Error("Failed to get client secret from server");
+        }
       } catch (err) {
         console.error("Payment init failed:", err);
-        setError(err?.response?.data?.message || "Failed to initialize payment");
+        const errorMessage = err?.response?.data?.message || 
+                           err?.message || 
+                           "Failed to initialize payment";
+        setError(errorMessage);
+        toast.error(errorMessage);
+        
+        // If it's an auth error, redirect to login
+        if (err?.response?.status === 401) {
+          navigate('/login', { state: { from: location.pathname, state: location.state } });
+        }
       } finally {
         setLoading(false);
       }
     };
+    
     init();
-  }, [eventId, section, unitPrice, quantity]);
+    
+    // Cleanup function
+    return () => {
+      // Any cleanup if needed
+    };
+  }, [eventId, section, unitPrice, quantity, navigate, location]);
 
   if (loading) {
     return (
