@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* Global safeguards against horizontal overflow and non-responsive media */
+html, body, #root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Stripe elements sometimes introduce nested containers; make sure they don't overflow */
+.StripeElement, .ElementsApp, .ElementsApp .InputElement {
+  max-width: 100% !important;
+}

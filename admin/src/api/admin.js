@@ -14,7 +14,7 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('admin_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -42,12 +42,12 @@ api.interceptors.response.use(
         );
         
         const { accessToken } = response.data;
-        localStorage.setItem('token', accessToken);
+        localStorage.setItem('admin_token', accessToken);
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         
         return api(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem('token');
+        localStorage.removeItem('admin_token');
         window.location.href = '/login';
         return Promise.reject(refreshError);
       }
@@ -62,7 +62,7 @@ const loginAdmin = async (credentials) => {
     const response = await api.post('/login', credentials);
     console.log('loginAdmin response:', response.data); // Debug
     if (response.data.accessToken) {
-      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('admin_token', response.data.accessToken);
       return {
         admin: response.data.admin || {}, // Ensure admin object is included
         accessToken: response.data.accessToken,
@@ -87,12 +87,12 @@ const logoutAdmin = async () => {
   } catch (error) {
     console.error('Logout API error:', error);
   } finally {
-    localStorage.removeItem('token');
+    localStorage.removeItem('admin_token');
   }
 };
 
 const checkAuth = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('admin_token');
   return !!token;
 };
 

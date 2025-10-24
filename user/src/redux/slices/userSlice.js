@@ -49,7 +49,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-// Initial state
+
 const initialState = {
   user: null,
   token: localStorage.getItem('token') || null,
@@ -76,7 +76,7 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Register cases
+     
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -95,7 +95,7 @@ const userSlice = createSlice({
         state.user = null;
         state.token = null;
       })
-      // Login cases
+    
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -114,7 +114,7 @@ const userSlice = createSlice({
         state.user = null;
         state.token = null;
       })
-      // Fetch profile cases
+    
       .addCase(fetchUserProfile.pending, (state) => {
         state.loading = true;
       })

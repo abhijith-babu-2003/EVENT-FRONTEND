@@ -11,7 +11,7 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('admin_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -27,44 +27,25 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-    
     // Handle network errors
     if (!error.response) {
-      console.error('Network error:', error);
       return Promise.reject({
         response: {
-          data: { message: 'Network error. Please check your connection.' }
-        }
+          data: { message: 'Network error. Please check your connection.' },
+        },
       });
     }
-    
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      
-      try {
-        const response = await axios.post(
-          `${'http://localhost:5000'}/api/admin/refresh-token`,
-          {},
-          { withCredentials: true }
-        );
-        
-        const { accessToken } = response.data;
-        localStorage.setItem('token', accessToken);
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        
-        return api(originalRequest);
-      } catch (refreshError) {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-        return Promise.reject(refreshError);
-      }
+
+    // Handle unauthorized: clear admin token and redirect
+    if (error.response?.status === 401) {
+      try { localStorage.removeItem('admin_token'); } catch (_) {}
+      window.location.href = '/login';
+      return Promise.reject(error);
     }
-    
+
     return Promise.reject(error);
   }
 );
-
 
 const createEventFormData = (eventData) => {
   const formData = new FormData();
