@@ -14,6 +14,7 @@ const UserProfilePage = () => {
   const [walletBalance, setWalletBalance] = useState(0);
   const [addAmount, setAddAmount] = useState("");
   const [addingMoney, setAddingMoney] = useState(false);
+  const [openQRCodeId, setOpenQRCodeId] = useState(null); 
   const fetchedRef = useRef(false);
 
   const handleLogout = async () => {
@@ -29,10 +30,10 @@ const UserProfilePage = () => {
     try {
       setLoading(true);
       const res = await paymentApi.getMyBookings();
-      // Handle different possible response formats
+
       const bookingsData = res.bookings || res.data?.bookings || res.data || [];
       setBookings(Array.isArray(bookingsData) ? bookingsData : []);
-      // Set wallet balance if returned in the response
+  
       if (res.walletBalance !== undefined) {
         setWalletBalance(res.walletBalance);
       }
@@ -100,6 +101,22 @@ const UserProfilePage = () => {
       toast.error(err?.message || "Failed to cancel booking");
     }
   };
+
+  // New handler for toggling QR code visibility
+  const toggleQRCode = (bookingId) => {
+    setOpenQRCodeId(openQRCodeId === bookingId ? null : bookingId);
+  };
+
+  // Close QR code on outside click (optional enhancement for better UX)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (openQRCodeId && !event.target.closest('.qr-popup-trigger')) {
+        setOpenQRCodeId(null);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [openQRCodeId]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -422,25 +439,34 @@ const UserProfilePage = () => {
                                   </span>
                                 </div>
                               </div>
-                              <div className="relative group">
+                              <div className="relative group qr-popup-trigger">
                                 <div className="flex items-center space-x-2">
                                   <div className="text-right">
                                     <div className="text-sm text-gray-500">Booking ID</div>
                                     <div className="text-sm font-medium text-gray-900">#{booking._id.slice(-6).toUpperCase()}</div>
                                   </div>
                                   <div className="relative">
-                                    <div className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-md hover:bg-gray-200 transition-colors cursor-pointer">
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleQRCode(booking._id);
+                                      }}
+                                      className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-md hover:bg-gray-200 transition-colors cursor-pointer"
+                                      aria-label="View QR Code"
+                                    >
                                       <FiMaximize2 className="w-4 h-4 text-gray-500" />
-                                    </div>
-                                    <div className="absolute right-0 top-10 z-10 hidden group-hover:block p-2 bg-white rounded-lg shadow-lg border border-gray-200">
-                                      <QRCodeSVG 
-                                        value={booking._id}
-                                        size={80}
-                                        level="H"
-                                        includeMargin={true}
-                                      />
-                                      <div className="text-xs text-center mt-1 text-gray-500">#{booking._id.slice(-6).toUpperCase()}</div>
-                                    </div>
+                                    </button>
+                                    {openQRCodeId === booking._id && (
+                                      <div className="absolute right-0 top-10 z-20 p-2 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[120px]">
+                                        <QRCodeSVG 
+                                          value={booking._id}
+                                          size={80}
+                                          level="H"
+                                          includeMargin={true}
+                                        />
+                                        <div className="text-xs text-center mt-1 text-gray-500">#{booking._id.slice(-6).toUpperCase()}</div>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                               </div>
