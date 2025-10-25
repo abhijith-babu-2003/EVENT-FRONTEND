@@ -500,9 +500,7 @@ const UserProfilePage = () => {
                               >
                                 {booking.paymentStatus === 'canceled' ? 'Cancelled' : 'Cancel Booking'}
                               </button>
-                              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700">
-                                View Details
-                              </button>
+                             
                             </div>
                           </div>
                         </div>

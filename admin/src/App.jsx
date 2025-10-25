@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Header from "./components/header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
@@ -17,7 +16,6 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header />
       <Routes>
         <Route path="/admin/login" element={<Login />} />
         <Route
@@ -36,9 +34,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/admin/bookings"
-          element={
+        <Route  path="/admin/bookings" element={
             <ProtectedRoute>
               <Bookings />
             </ProtectedRoute>

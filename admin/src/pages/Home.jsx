@@ -1,7 +1,9 @@
+// Updated Home.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { FaUsers, FaCalendarAlt, FaTicketAlt } from "react-icons/fa";
+import { FaUsers, FaCalendarAlt, FaTicketAlt, FaDollarSign } from "react-icons/fa";
 import { eventApi } from "../api/event";
 import { bookingApi } from "../api/bookings";
+import Sidebar from "../components/Sidebar"
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -35,10 +37,18 @@ const Home = () => {
 
   const todayISO = new Date().toISOString().slice(0, 10);
 
+  const formatCurrency = (amount, currency = 'INR') => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: currency.toUpperCase(),
+    }).format(amount);
+  };
+
   const metrics = useMemo(() => {
     const succeeded = bookings.filter(b => b.paymentStatus === "succeeded");
     const canceled = bookings.filter(b => b.paymentStatus === "canceled");
     const totalTicketsSold = succeeded.reduce((sum, b) => sum + (b.quantity || 0), 0);
+    const totalRevenue = succeeded.reduce((sum, b) => sum + (b.totalPrice || 0), 0);
     const totalCancellations = canceled.length;
 
     const uniqueUsers = new Set();
@@ -82,6 +92,7 @@ const Home = () => {
       totalUsers: uniqueUsers.size,
       totalEvents: events?.length || 0,
       totalTicketsSold,
+      totalRevenue,
       totalCancellations,
       daily,
       recentCancellations,
@@ -106,13 +117,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex">
-     
-        <aside className="w-64 bg-gray-900 min-h-screen p-6 space-y-6 hidden md:block">
-          <div className="h-12 bg-gray-700 rounded-lg"></div>
-          <div className="h-12 bg-gray-700 rounded-lg"></div>
-          <div className="h-12 bg-gray-700 rounded-lg"></div>
-          <div className="h-12 bg-gray-700 rounded-lg"></div>
-        </aside>
+        <Sidebar />
 
         <main className="flex-1 p-6">
           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
@@ -124,7 +129,7 @@ const Home = () => {
           ) : (
             <>
               {/* KPIs */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
                 <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
                   <FaUsers size={30} className="text-blue-500" />
                   <div>
@@ -144,6 +149,13 @@ const Home = () => {
                   <div>
                     <h3 className="text-sm font-semibold text-gray-600">Tickets Sold</h3>
                     <p className="text-2xl font-bold">{metrics.totalTicketsSold}</p>
+                  </div>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
+                  <FaDollarSign size={30} className="text-purple-500" />
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-600">Total Revenue</h3>
+                    <p className="text-2xl font-bold">{formatCurrency(metrics.totalRevenue)}</p>
                   </div>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">

@@ -12,16 +12,17 @@ const Home = () => {
           alt="Hero Background"
           className="w-full h-full object-cover brightness-50"
         />
-        <div className="absolute inset-0 flex flex-col justify-center  items-center text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-3 leading-tight">
             Discover Amazing <span className="text-fuchsia-400">Events</span>
           </h1>
-          <p className="text-lg md:text-2xl mb-6">
-           <span className="text-fuchsia-400">Book tickets</span>, join experiences, and enjoy live events near you.
+          <p className="text-base sm:text-lg md:text-2xl mb-5 max-w-md sm:max-w-lg">
+            <span className="text-fuchsia-400">Book tickets</span>, join
+            experiences, and enjoy live events near you.
           </p>
           <Link
             to="/events"
-            className="bg-black text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-800 transition duration-200"
+            className="bg-black text-white px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold hover:bg-gray-800 transition duration-200 text-sm sm:text-base"
           >
             Browse Events
           </Link>
@@ -29,7 +30,7 @@ const Home = () => {
       </div>
 
       {/* App Promo Section */}
-      <section className="bg-black text-white py-16">
+      <section className="bg-black text-white py-16 mt-30">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Phone mock */}
           <div className="flex justify-center lg:justify-start">
@@ -64,27 +65,38 @@ const Home = () => {
               <li className="flex gap-3">
                 <span className="mt-1 h-2 w-2 rounded-full bg-fuchsia-400" />
                 <p>
-                  <span className="font-semibold">Instant Access, Instant Vibes</span> — get event updates and deals in real-time.
+                  <span className="font-semibold">
+                    Instant Access, Instant Vibes
+                  </span>{" "}
+                  — get event updates and deals in real-time.
                 </p>
               </li>
               <li className="flex gap-3">
                 <span className="mt-1 h-2 w-2 rounded-full bg-fuchsia-400" />
                 <p>
-                  <span className="font-semibold">Connect and Share</span> — make friends, join communities, and share moments.
+                  <span className="font-semibold">Connect and Share</span> —
+                  make friends, join communities, and share moments.
                 </p>
               </li>
               <li className="flex gap-3">
                 <span className="mt-1 h-2 w-2 rounded-full bg-fuchsia-400" />
                 <p>
-                  <span className="font-semibold">Plan Like a Pro</span> — set reminders and discover hotspots with ease.
+                  <span className="font-semibold">Plan Like a Pro</span> — set
+                  reminders and discover hotspots with ease.
                 </p>
               </li>
             </ul>
 
-            <p className="mt-8 text-lg font-semibold">Ready To Party Smarter?</p>
+            <p className="mt-8 text-lg font-semibold">
+              Ready To Party Smarter?
+            </p>
             <div className="mt-3 flex gap-3">
-              <button className="px-4 py-2 rounded-md bg-white text-black font-semibold hover:bg-gray-100 transition">Get it on Google Play</button>
-              <button className="px-4 py-2 rounded-md border border-white/30 hover:border-white/60">Download on the App Store</button>
+              <button className="px-4 py-2 rounded-md bg-white text-black font-semibold hover:bg-gray-100 transition">
+                Get it on Google Play
+              </button>
+              <button className="px-4 py-2 rounded-md border border-white/30 hover:border-white/60">
+                Download on the App Store
+              </button>
             </div>
           </div>
         </div>
@@ -107,7 +119,9 @@ const Home = () => {
                   </span>
                 </div>
               </div>
-              <p className="text-gray-300 text-sm md:text-base max-w-[12rem]">{item.label}</p>
+              <p className="text-gray-300 text-sm md:text-base max-w-[12rem]">
+                {item.label}
+              </p>
             </div>
           ))}
         </div>
@@ -118,7 +132,8 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-center text-sm text-gray-400">How it works</p>
           <h3 className="text-center text-2xl md:text-4xl font-extrabold mt-1">
-            We Make Your <span className="text-fuchsia-400">Nightlife</span> Easy
+            We Make Your <span className="text-fuchsia-400">Nightlife</span>{" "}
+            Easy
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
@@ -127,7 +142,8 @@ const Home = () => {
                 step: "1",
                 title: (
                   <>
-                    Discover Your <span className="text-fuchsia-400">Scene</span>
+                    Discover Your{" "}
+                    <span className="text-fuchsia-400">Scene</span>
                   </>
                 ),
                 desc: "Discover your perfect event, effortlessly",

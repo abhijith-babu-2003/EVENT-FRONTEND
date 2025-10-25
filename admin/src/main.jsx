@@ -7,7 +7,7 @@ import './index.css';
 import App from './App.jsx';
 import store, { persistor } from './redux/store.js';
 import { initializeAuth } from './redux/slices/adminSlice';
-import ErrorBoundary from './components/ErrorBoundary'; // Adjust the path
+import ErrorBoundary from './components/ErrorBoundary'; 
 
 const root = createRoot(document.getElementById('root'));
 

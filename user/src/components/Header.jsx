@@ -32,7 +32,7 @@ const Header = () => {
       <nav className="container mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           <button
-            className="text-2xl font-extrabold text-fuchsia-500 hover:text-violet-500"
+            className="text-2xl font-extrabold text-white hover:text-fuchsia-500"
             onClick={() => navigate('/')}
           >
             Venuo
@@ -41,16 +41,16 @@ const Header = () => {
           {/* Desktop nav links */}
           <ul className="hidden md:flex items-center gap-6">
             <li>
-              <a href="/" className="hover:text-violet-500 text-fuchsia-500 font-bold transition">HOME</a>
+              <a href="/" className="hover:text-fuchsia-500 text-white font-bold transition">Home</a>
             </li>
             <li>
-              <a href="/events" className="hover:text-violet-500 text-fuchsia-500 font-bold transition">EVENTS</a>
+              <a href="/events" className="hover:text-fuchsia-500 text-white font-bold transition">Events</a>
             </li>
             <li>
-              <a href="/about" className="hover:text-violet-500 text-fuchsia-500 font-bold transition">ABOUT</a>
+              <a href="/about" className="hover:text-fuchsia-500 text-white font-bold transition">About</a>
             </li>
             <li>
-              <a href="/contact" className="hover:text-violet-500 text-fuchsia-500 font-bold transition">CONTACT</a>
+              <a href="/contact" className="hover:text-fuchsia-500 text-white  font-bold transition">Contact</a>
             </li>
           </ul>
 
@@ -61,7 +61,7 @@ const Header = () => {
                 {user && (
                   <button
                     onClick={() => navigate('/profile')}
-                    className="font-bold text-fuchsia-500 hover:text-violet-500 transition"
+                    className="font-bold text-fuchsia-500 border p-2 rounded-2xl hover:text-violet-500 transition"
                   >
                     {user.name || user.username}
                   </button>
@@ -112,16 +112,16 @@ const Header = () => {
           <div className="md:hidden mt-3 border-t border-white/10 pt-3">
             <ul className="flex flex-col gap-2">
               <li>
-                <a onClick={() => setMobileOpen(false)} href="/" className="block px-2 py-2 rounded text-white hover:bg-white/10 font-semibold">HOME</a>
+                <a onClick={() => setMobileOpen(false)} href="/" className="block px-2 py-2 rounded text-white hover:text-fuchsia-500 font-semibold">Home</a>
               </li>
               <li>
-                <a onClick={() => setMobileOpen(false)} href="/events" className="block px-2 py-2 rounded text-white hover:bg-white/10 font-semibold">EVENTS</a>
+                <a onClick={() => setMobileOpen(false)} href="/events" className="block px-2 py-2 rounded text-white hover:text-fuchsia-500 font-semibold">Events</a>
               </li>
               <li>
-                <a onClick={() => setMobileOpen(false)} href="/about" className="block px-2 py-2 rounded text-white hover:bg-white/10 font-semibold">ABOUT</a>
+                <a onClick={() => setMobileOpen(false)} href="/about" className="block px-2 py-2 rounded text-white hover:text-fuchsia-500font-semibold">About</a>
               </li>
               <li>
-                <a onClick={() => setMobileOpen(false)} href="/contact" className="block px-2 py-2 rounded text-white hover:bg-white/10 font-semibold">CONTACT</a>
+                <a onClick={() => setMobileOpen(false)} href="/contact" className="block px-2 py-2 rounded text-white hover:text-fuchsia-500 font-semibold">Contact</a>
               </li>
             </ul>
 
@@ -131,14 +131,14 @@ const Header = () => {
                   {user && (
                     <button
                       onClick={() => { navigate('/profile'); setMobileOpen(false); }}
-                      className="w-full border border-white/20 px-3 py-2 rounded text-white font-semibold hover:border-white/40"
+                      className="w-full border rounded-2xl px-3 py-2  text-fuchsia-500 font-semibold hover:text-violet-500"
                     >
                       {user.name || user.username}
                     </button>
                   )}
                   <button
                     onClick={() => { handleLogout(); setMobileOpen(false); }}
-                    className="w-full bg-red-600 text-white px-3 py-2 rounded font-bold hover:bg-red-700"
+                    className="w-full bg-red-600 text-white px-3 py-2 rounded-2xl font-bold hover:bg-red-700"
                   >
                     Logout
                   </button>
