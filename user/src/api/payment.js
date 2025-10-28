@@ -38,21 +38,19 @@ api.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     
-    // Handle 401 Unauthorized errors
+   
     if (error?.response?.status === 401) {
       console.warn('Authentication failed, redirecting to login');
       localStorage.removeItem('token');
       
-      // Only redirect if we're not already on the login page
+      
       if (!window.location.pathname.includes('/login')) {
         const redirectPath = window.location.pathname + window.location.search;
         window.location.href = `/login?redirect=${encodeURIComponent(redirectPath)}`;
       }
     }
-    
-    // Log error details for debugging
+
     if (error.response) {
-      // The request was made and the server responded with a status code
       console.error('Response error:', {
         status: error.response.status,
         statusText: error.response.statusText,
