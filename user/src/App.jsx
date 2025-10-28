@@ -13,7 +13,7 @@ import About from "./pages/About";
 import CheckOut from "./pages/CheckOut";
 import Payment from "./pages/Payment";
 import UserProfilePage from "./pages/UserProfilePage";
-import Bookings from "./pages/Bookings";
+
 const App = () => {
   return (
     <div>
@@ -31,7 +31,6 @@ const App = () => {
           <Route path="/checkout/:eventId" element={<CheckOut />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/profile" element={<UserProfilePage />} />
-          <Route path="/bookings" element={<Bookings />} />
         </Route>
 
       </Routes>
